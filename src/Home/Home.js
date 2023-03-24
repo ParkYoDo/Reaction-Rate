@@ -1,5 +1,5 @@
-import 'Home/HomeStyle.css';
-import { useRef, useState } from 'react';
+import './HomeStyle.css';
+import React, { useRef, useState } from 'react';
 import {
   Button,
   Container,
