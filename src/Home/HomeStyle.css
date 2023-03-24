@@ -1,6 +1,6 @@
 * {
   text-align: center;
-  font-family: "Jua", sans-serif;
+  font-family: 'Jua', sans-serif;
 }
 
 #screen,
@@ -48,24 +48,4 @@
 .name {
   width: 80vw !important;
   margin: auto;
-}
-
-@media screen and (width > 768px) {
-  .all {
-    display: flex;
-    flex-direction: row;
-    margin: auto;
-    justify-content: space-around;
-    align-items: center;
-  }
-  #screen,
-  .Modal,
-  .score,
-  .name {
-    width: 45vw !important;
-  }
-
-  #screen {
-    height: 80vh;
-  }
 }
