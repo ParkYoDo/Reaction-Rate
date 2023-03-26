@@ -62,8 +62,7 @@ export const ScreenDiv = styled.div<{ screenState: string }>`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: ${(props) =>
-    props.screenState === 'go' ? 'green' : 'rgb(243, 243, 176)'};
+  background-color: ${(props) => (props.screenState === 'go' ? 'green' : 'rgb(243, 243, 176)')};
   @media screen and (min-width: 768px) and (max-width: 1024px) {
     width: 500px;
     height: 500px;

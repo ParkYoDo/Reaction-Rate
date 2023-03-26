@@ -4,7 +4,7 @@ import { Button, Container, Navbar, Table } from 'react-bootstrap';
 
 function App() {
   const [user, setUser] = useState('');
-  const [name, setName] = useState('');
+  const [input, setInput] = useState('');
   const [modal, setModal] = useState(true);
   const [message, setMessage] = useState('화면을 클릭하여 시작');
   const [screenState, setScreenState] = useState('waiting');
@@ -42,10 +42,7 @@ function App() {
           clearTimeout(timeOut.current);
           setScreenState('waiting');
           setMessage('다시 시작하려면 화면 클릭');
-          setResultTime([
-            ...resultTime,
-            Number(endTime.current) - Number(startTime.current),
-          ]);
+          setResultTime([...resultTime, Number(endTime.current) - Number(startTime.current)]);
           setCount(count + 1);
         }
       }
@@ -60,16 +57,14 @@ function App() {
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
+    setInput(e.target.value);
   };
 
   const changeName = () => {
-    if (name) {
-      setName('');
-      setUser(name);
-    } else {
-      alert('변경할 이름을 입력하세요');
-    }
+    if (input) {
+      setInput('');
+      setUser(input);
+    } else alert('변경할 이름을 입력하세요');
   };
 
   return (
@@ -77,11 +72,7 @@ function App() {
       <Navbar bg="dark" variant="dark">
         <Container>
           <Navbar.Brand href="/">
-            <S.NavLogo
-              src="/logo.svg"
-              alt="Logo_Image"
-              className="d-inline-block align-top"
-            />
+            <S.NavLogo src="/logo.svg" alt="Logo_Image" className="d-inline-block align-top" />
             반응속도 테스트
           </Navbar.Brand>
           <Navbar.Text>
@@ -93,12 +84,8 @@ function App() {
       {modal && (
         <S.ModalDiv>
           <S.ModalTitle>게임설명</S.ModalTitle>
-          <S.ModalContent>
-            3번의 반응속도를 측정 후 평균값을 보여줍니다
-          </S.ModalContent>
-          <S.ModalContent>
-            시작하려면 게임설명을 닫고 화면을 클릭하세요
-          </S.ModalContent>
+          <S.ModalContent>3번의 반응속도를 측정 후 평균값을 보여줍니다</S.ModalContent>
+          <S.ModalContent>시작하려면 게임설명을 닫고 화면을 클릭하세요</S.ModalContent>
           <Button variant="info" className="mt-2" onClick={closeModal}>
             닫기
           </Button>
@@ -127,11 +114,7 @@ function App() {
       </S.ScreenDiv>
 
       <S.InputDiv className="mb-4">
-        <S.NameInput
-          value={name}
-          placeholder="변경할 이름을 입력하세요"
-          onChange={onChange}
-        />
+        <S.NameInput value={input} placeholder="변경할 이름을 입력하세요" onChange={onChange} />
         <S.ChangeBtn onClick={changeName}>변경</S.ChangeBtn>
       </S.InputDiv>
 
