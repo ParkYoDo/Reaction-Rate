@@ -8,7 +8,7 @@ export const NavLogo = styled.img`
 export const NavContent = styled.div``;
 
 export const ModalDiv = styled.div`
-  width: 400px;
+  width: 300px;
   height: 200px;
   margin: 0 auto;
   margin-top: 30px;
@@ -20,21 +20,41 @@ export const ModalDiv = styled.div`
   border-radius: 12px;
   box-shadow: 3px 3px 3px 3px #dedce0;
   background-color: rgb(166, 235, 146);
+  @media screen and (min-width: 768px) and (max-width: 1024px) {
+    width: 500px;
+    height: 300px;
+  }
+  @media screen and (min-width: 1024px) {
+    width: 600px;
+    height: 300px;
+  }
 `;
 
 export const ModalTitle = styled.div`
-  font-size: 28px;
+  font-size: 20px;
   text-align: center;
+  @media screen and (min-width: 768px) and (max-width: 1024px) {
+    font-size: 28px;
+  }
+  @media screen and (min-width: 1024px) {
+    font-size: 32px;
+  }
 `;
 
 export const ModalContent = styled.div`
-  font-size: 18px;
+  font-size: 15px;
+  @media screen and (min-width: 768px) and (max-width: 1024px) {
+    font-size: 18px;
+  }
+  @media screen and (min-width: 1024px) {
+    font-size: 24px;
+  }
 `;
 
 export const ScreenDiv = styled.div`
   margin: 0 auto;
   margin-top: 30px;
-  width: 400px;
+  width: 300px;
   height: 300px;
   border-radius: 12px;
   cursor: pointer;
@@ -44,19 +64,45 @@ export const ScreenDiv = styled.div`
   align-items: center;
   background-color: ${(props) =>
     props.screenState === 'go' ? 'green' : 'rgb(243, 243, 176)'};
+  @media screen and (min-width: 768px) and (max-width: 1024px) {
+    width: 500px;
+    height: 500px;
+  }
+  @media screen and (min-width: 1024px) {
+    width: 600px;
+    height: 600px;
+  }
 `;
 
 export const ScreenTitle = styled.div`
-  font-size: 28px;
+  font-size: 20px;
+  @media screen and (min-width: 768px) and (max-width: 1024px) {
+    font-size: 28px;
+  }
+  @media screen and (min-width: 1024px) {
+    font-size: 32px;
+  }
 `;
 
 export const ScreenContent = styled.div`
-  font-size: 18px;
+  font-size: 15px;
+  @media screen and (min-width: 768px) and (max-width: 1024px) {
+    font-size: 18px;
+  }
+  @media screen and (min-width: 1024px) {
+    font-size: 24px;
+  }
 `;
 
 export const InputDiv = styled.div`
-  width: 400px;
+  width: 300px;
   margin: 0 auto;
+  @media screen and (min-width: 768px) and (max-width: 1024px) {
+    width: 500px;
+  }
+  @media screen and (min-width: 1024px) {
+    width: 600px;
+  }
 `;
 
 export const TableHead = styled.thead``;

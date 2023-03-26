@@ -10,8 +10,8 @@ import {
 } from 'react-bootstrap';
 
 function App() {
-  const [user, setUser] = useState(['박요도']);
-  const [name, setName] = useState(['']);
+  const [user, setUser] = useState('박요도');
+  const [name, setName] = useState('');
   const [modal, setModal] = useState(true);
   const [message, setMessage] = useState('화면을 클릭하여 시작');
   const [screenState, setScreenState] = useState('waiting');
@@ -70,7 +70,12 @@ function App() {
   };
 
   const changeName = () => {
-    setUser(name);
+    if (name) {
+      setName('');
+      setUser(name);
+    } else {
+      alert('변경할 이름을 입력하세요');
+    }
   };
 
   return (
@@ -128,41 +133,47 @@ function App() {
         )}
       </S.ScreenDiv>
 
-      <S.InputDiv>
-        <InputGroup className="mt-5" onChange={onChange}>
-          <Form.Control placeholder="변경할 이름을 입력하세요" />
+      <S.InputDiv className="mb-4">
+        <InputGroup className="mt-5">
+          <Form.Control
+            value={name}
+            onChange={onChange}
+            placeholder="변경할 이름을 입력하세요"
+          />
           <Button variant="outline-secondary" onClick={changeName}>
             변경
           </Button>
         </InputGroup>
 
         {/* Score */}
-        <Table
-          className="mt-5"
-          striped
-          bordered
-          hover
-          style={{ borderRadius: '12px' }}
-        >
-          <S.TableHead>
-            <S.TableTr>
-              <S.TableTd>순 위</S.TableTd>
-              <S.TableTd>이 름</S.TableTd>
-              <S.TableTd>시 간</S.TableTd>
-            </S.TableTr>
-          </S.TableHead>
-          <S.TableBody>
-            {AscendingArr.map((array, i) => {
-              return (
-                <S.TableTr>
-                  <S.TableTd>{i + 1}</S.TableTd>
-                  <S.TableTd>{array[0]}</S.TableTd>
-                  <S.TableTd>{array[1]}ms</S.TableTd>
-                </S.TableTr>
-              );
-            })}
-          </S.TableBody>
-        </Table>
+        {AscendingArr.length !== 0 && (
+          <Table
+            className="mt-5"
+            striped
+            bordered
+            hover
+            style={{ borderRadius: '12px' }}
+          >
+            <S.TableHead>
+              <S.TableTr>
+                <S.TableTd>순 위</S.TableTd>
+                <S.TableTd>이 름</S.TableTd>
+                <S.TableTd>시 간</S.TableTd>
+              </S.TableTr>
+            </S.TableHead>
+            <S.TableBody>
+              {AscendingArr.map((array, i) => {
+                return (
+                  <S.TableTr key={i}>
+                    <S.TableTd>{i + 1}</S.TableTd>
+                    <S.TableTd>{array[0]}</S.TableTd>
+                    <S.TableTd>{array[1]}ms</S.TableTd>
+                  </S.TableTr>
+                );
+              })}
+            </S.TableBody>
+          </Table>
+        )}
       </S.InputDiv>
     </>
   );
