@@ -1,27 +1,20 @@
 import React, { useRef, useState } from 'react';
-import * as S from './HomeStyle';
-import {
-  Button,
-  Container,
-  Navbar,
-  Table,
-  InputGroup,
-  Form,
-} from 'react-bootstrap';
+import * as S from 'Home/HomeStyle';
+import { Button, Container, Navbar, Table } from 'react-bootstrap';
 
 function App() {
-  const [user, setUser] = useState('박요도');
+  const [user, setUser] = useState('');
   const [name, setName] = useState('');
   const [modal, setModal] = useState(true);
   const [message, setMessage] = useState('화면을 클릭하여 시작');
   const [screenState, setScreenState] = useState('waiting');
   const [count, setCount] = useState(0);
-  const [resultTime, setResultTime] = useState([]);
-  const [resultAvg, setResultAvg] = useState([]);
+  const [resultTime, setResultTime] = useState<number[]>([]);
+  const [resultAvg, setResultAvg] = useState<[string, number][]>([]);
 
-  const timeOut = useRef();
-  const startTime = useRef();
-  const endTime = useRef();
+  const timeOut = useRef<NodeJS.Timeout>();
+  const startTime = useRef<Date>();
+  const endTime = useRef<Date>();
   const AscendingArr = [...resultAvg].sort((a, b) => a[1] - b[1]);
 
   const closeModal = () => {
@@ -29,43 +22,44 @@ function App() {
   };
 
   const screenClick = () => {
-    if (count < 3) {
-      if (screenState === 'waiting') {
-        setScreenState('ready');
-        setMessage('초록색 화면으로 변하면 클릭!');
+    if (user) {
+      if (count < 3) {
+        if (screenState === 'waiting') {
+          setScreenState('ready');
+          setMessage('초록색 화면으로 변하면 클릭!');
 
-        timeOut.current = setTimeout(() => {
-          setScreenState('go');
-          setMessage('클릭!');
-          startTime.current = new Date();
-        }, Math.random() * 1 + 3000);
-      } else if (screenState === 'ready') {
-        clearTimeout(timeOut.current);
-        setScreenState('waiting');
-        setMessage('클릭을 너무 일찍했음');
-      } else if (screenState === 'go') {
-        endTime.current = new Date();
-        clearTimeout(timeOut.current);
-        setScreenState('waiting');
-        setMessage('다시 시작하려면 화면 클릭');
-        setResultTime((prev) => {
-          return [...prev, endTime.current - startTime.current];
-        });
-        setCount(count + 1);
+          timeOut.current = setTimeout(() => {
+            setScreenState('go');
+            setMessage('클릭!');
+            startTime.current = new Date();
+          }, Math.random() * 1 + 3000);
+        } else if (screenState === 'ready') {
+          clearTimeout(timeOut.current);
+          setScreenState('waiting');
+          setMessage('클릭을 너무 일찍했음');
+        } else if (screenState === 'go') {
+          endTime.current = new Date();
+          clearTimeout(timeOut.current);
+          setScreenState('waiting');
+          setMessage('다시 시작하려면 화면 클릭');
+          setResultTime([
+            ...resultTime,
+            Number(endTime.current) - Number(startTime.current),
+          ]);
+          setCount(count + 1);
+        }
       }
-    }
+    } else alert('이름을 설정하세요');
   };
 
   const Retry = () => {
-    let avg = Math.floor((resultTime[0] + resultTime[1] + resultTime[2]) / 3);
-    setResultAvg((prev) => {
-      return [...prev, [user, avg]];
-    });
+    const avg = Math.floor((resultTime[0] + resultTime[1] + resultTime[2]) / 3);
+    setResultAvg([...resultAvg, [user, avg]]);
     setResultTime([]);
     setCount(0);
   };
 
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
 
@@ -82,7 +76,7 @@ function App() {
     <>
       <Navbar bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="./">
+          <Navbar.Brand href="/">
             <S.NavLogo
               src="/logo.svg"
               alt="Logo_Image"
@@ -111,7 +105,6 @@ function App() {
         </S.ModalDiv>
       )}
 
-      {/* Main Screen */}
       <S.ScreenDiv screenState={screenState} onClick={screenClick}>
         <S.ScreenTitle>{message}</S.ScreenTitle>
         {message === '다시 시작하려면 화면 클릭' && count !== 0 && (
@@ -134,26 +127,17 @@ function App() {
       </S.ScreenDiv>
 
       <S.InputDiv className="mb-4">
-        <InputGroup className="mt-5">
-          <Form.Control
-            value={name}
-            onChange={onChange}
-            placeholder="변경할 이름을 입력하세요"
-          />
-          <Button variant="outline-secondary" onClick={changeName}>
-            변경
-          </Button>
-        </InputGroup>
+        <S.NameInput
+          value={name}
+          placeholder="변경할 이름을 입력하세요"
+          onChange={onChange}
+        />
+        <S.ChangeBtn onClick={changeName}>변경</S.ChangeBtn>
+      </S.InputDiv>
 
-        {/* Score */}
+      <S.ScoreDiv>
         {AscendingArr.length !== 0 && (
-          <Table
-            className="mt-5"
-            striped
-            bordered
-            hover
-            style={{ borderRadius: '12px' }}
-          >
+          <Table striped bordered hover style={{ borderRadius: '12px' }}>
             <S.TableHead>
               <S.TableTr>
                 <S.TableTd>순 위</S.TableTd>
@@ -174,7 +158,7 @@ function App() {
             </S.TableBody>
           </Table>
         )}
-      </S.InputDiv>
+      </S.ScoreDiv>
     </>
   );
 }
