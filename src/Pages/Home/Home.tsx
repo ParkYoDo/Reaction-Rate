@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import * as S from 'Home/HomeStyle';
+import * as S from 'Pages/Home/HomeStyle';
 import { Button, Container, Navbar, Table } from 'react-bootstrap';
 
 function App() {
