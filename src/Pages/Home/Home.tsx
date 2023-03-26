@@ -131,7 +131,7 @@ function App() {
             <S.TableBody>
               {AscendingArr.map((array, i) => {
                 return (
-                  <S.TableTr key={i}>
+                  <S.TableTr key={array[1]}>
                     <S.TableTd>{i + 1}</S.TableTd>
                     <S.TableTd>{array[0]}</S.TableTd>
                     <S.TableTd>{array[1]}ms</S.TableTd>
