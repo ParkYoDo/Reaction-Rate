@@ -1,5 +1,5 @@
-import './HomeStyle.css';
 import React, { useRef, useState } from 'react';
+import * as S from './HomeStyle';
 import {
   Button,
   Container,
@@ -22,8 +22,11 @@ function App() {
   const timeOut = useRef();
   const startTime = useRef();
   const endTime = useRef();
-
   const AscendingArr = [...resultAvg].sort((a, b) => a[1] - b[1]);
+
+  const closeModal = () => {
+    setModal(false);
+  };
 
   const screenClick = () => {
     if (count < 3) {
@@ -62,128 +65,105 @@ function App() {
     setCount(0);
   };
 
+  const onChange = (e) => {
+    setName(e.target.value);
+  };
+
+  const changeName = () => {
+    setUser(name);
+  };
+
   return (
     <>
-      {/* 상단 Navbar */}
-      <div>
-        <Navbar bg="dark" variant="dark">
-          <Container>
-            <Navbar.Brand href="./">
-              <img
-                alt=""
-                src="/logo.svg"
-                width="30"
-                height="30"
-                className="d-inline-block align-top"
-              />{' '}
-              반응속도 테스트
-            </Navbar.Brand>
-            <Navbar.Text>
-              <div>{user}</div>
-            </Navbar.Text>
-          </Container>
-        </Navbar>
-      </div>
+      <Navbar bg="dark" variant="dark">
+        <Container>
+          <Navbar.Brand href="./">
+            <S.NavLogo
+              src="/logo.svg"
+              alt="Logo_Image"
+              className="d-inline-block align-top"
+            />
+            반응속도 테스트
+          </Navbar.Brand>
+          <Navbar.Text>
+            <S.NavContent>{user}</S.NavContent>
+          </Navbar.Text>
+        </Container>
+      </Navbar>
 
-      <div className="all">
-        <div className="left">
-          {/* Modal창 */}
-          {modal ? (
-            <div className="mt-5 Modal">
-              <h1>게임설명</h1>
-              <p>
-                3번의 반응속도를 측정 후 평균값을 보여줍니다
-                <br />
-                시작하려면 게임설명을 닫고 화면을 클릭하세요
-              </p>
-              <Button
-                variant="info"
-                className="mt-2"
-                onClick={() => {
-                  setModal(false);
-                }}
-              >
-                닫기
-              </Button>{' '}
-            </div>
-          ) : null}
+      {modal && (
+        <S.ModalDiv>
+          <S.ModalTitle>게임설명</S.ModalTitle>
+          <S.ModalContent>
+            3번의 반응속도를 측정 후 평균값을 보여줍니다
+          </S.ModalContent>
+          <S.ModalContent>
+            시작하려면 게임설명을 닫고 화면을 클릭하세요
+          </S.ModalContent>
+          <Button variant="info" className="mt-2" onClick={closeModal}>
+            닫기
+          </Button>
+        </S.ModalDiv>
+      )}
 
-          {/* Main Screen */}
-          <div
-            id="screen"
-            className={'mt-5 ' + screenState}
-            onClick={screenClick}
-          >
-            <h1>{message}</h1>
-            {message === '다시 시작하려면 화면 클릭' && count !== 0 ? (
-              <div>
-                {count}번째 시도는 {resultTime[count - 1]}ms입니다.
-              </div>
-            ) : null}
-            {count === 3 ? (
-              <div>
-                평균값은{' '}
-                {Math.floor(
-                  (resultTime[0] + resultTime[1] + resultTime[2]) / 3,
-                )}
-                ms입니다.
-                <br />
-                <Button variant="warning" className="mt-2" onClick={Retry}>
-                  다시 시도
-                </Button>{' '}
-              </div>
-            ) : null}
-          </div>
-        </div>
-
-        <div className="right">
-          {/* UserName 변경 */}
-          <InputGroup
-            className="mt-5 name"
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-          >
-            <Form.Control placeholder="변경할 이름을 입력하세요" />
-            <Button
-              variant="outline-secondary"
-              onClick={() => {
-                setUser(name);
-              }}
-            >
-              변경
+      {/* Main Screen */}
+      <S.ScreenDiv screenState={screenState} onClick={screenClick}>
+        <S.ScreenTitle>{message}</S.ScreenTitle>
+        {message === '다시 시작하려면 화면 클릭' && count !== 0 && (
+          <S.ScreenContent>
+            {count}번째 시도는 {resultTime[count - 1]}ms입니다.
+          </S.ScreenContent>
+        )}
+        {count === 3 && (
+          <>
+            <S.ScreenContent>
+              평균값은
+              {Math.floor((resultTime[0] + resultTime[1] + resultTime[2]) / 3)}
+              ms입니다.
+            </S.ScreenContent>
+            <Button variant="warning" className="mt-2" onClick={Retry}>
+              다시 시도
             </Button>
-          </InputGroup>
+          </>
+        )}
+      </S.ScreenDiv>
 
-          {/* Score */}
-          <Table
-            className="mt-5 score"
-            striped
-            bordered
-            hover
-            style={{ borderRadius: '12px' }}
-          >
-            <thead>
-              <tr>
-                <th>순 위</th>
-                <th>이 름</th>
-                <th>시 간</th>
-              </tr>
-            </thead>
-            <tbody>
-              {AscendingArr.map((array, i) => {
-                return (
-                  <tr>
-                    <td>{i + 1}</td>
-                    <td>{array[0]}</td>
-                    <td>{array[1]}ms</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </Table>
-        </div>
-      </div>
+      <S.InputDiv>
+        <InputGroup className="mt-5" onChange={onChange}>
+          <Form.Control placeholder="변경할 이름을 입력하세요" />
+          <Button variant="outline-secondary" onClick={changeName}>
+            변경
+          </Button>
+        </InputGroup>
+
+        {/* Score */}
+        <Table
+          className="mt-5"
+          striped
+          bordered
+          hover
+          style={{ borderRadius: '12px' }}
+        >
+          <S.TableHead>
+            <S.TableTr>
+              <S.TableTd>순 위</S.TableTd>
+              <S.TableTd>이 름</S.TableTd>
+              <S.TableTd>시 간</S.TableTd>
+            </S.TableTr>
+          </S.TableHead>
+          <S.TableBody>
+            {AscendingArr.map((array, i) => {
+              return (
+                <S.TableTr>
+                  <S.TableTd>{i + 1}</S.TableTd>
+                  <S.TableTd>{array[0]}</S.TableTd>
+                  <S.TableTd>{array[1]}ms</S.TableTd>
+                </S.TableTr>
+              );
+            })}
+          </S.TableBody>
+        </Table>
+      </S.InputDiv>
     </>
   );
 }
