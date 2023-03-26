@@ -1,8 +1,14 @@
 import React, { useRef, useState } from 'react';
 import * as S from 'Pages/Home/HomeStyle';
 import { Button, Container, Navbar, Table } from 'react-bootstrap';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from 'store/store';
+import { addScore } from 'store/score';
 
 function App() {
+  const dispatch = useDispatch();
+  const score = useSelector((state: RootState) => state.score);
+
   const [user, setUser] = useState('');
   const [input, setInput] = useState('');
   const [modal, setModal] = useState(true);
@@ -10,12 +16,10 @@ function App() {
   const [screenState, setScreenState] = useState('waiting');
   const [count, setCount] = useState(0);
   const [resultTime, setResultTime] = useState<number[]>([]);
-  const [resultAvg, setResultAvg] = useState<[string, number][]>([]);
 
   const timeOut = useRef<NodeJS.Timeout>();
   const startTime = useRef<Date>();
   const endTime = useRef<Date>();
-  const AscendingArr = [...resultAvg].sort((a, b) => a[1] - b[1]);
 
   const closeModal = () => {
     setModal(false);
@@ -51,7 +55,7 @@ function App() {
 
   const Retry = () => {
     const avg = Math.floor((resultTime[0] + resultTime[1] + resultTime[2]) / 3);
-    setResultAvg([...resultAvg, [user, avg]]);
+    dispatch(addScore([user, avg]));
     setResultTime([]);
     setCount(0);
   };
@@ -119,7 +123,7 @@ function App() {
       </S.InputDiv>
 
       <S.ScoreDiv>
-        {AscendingArr.length !== 0 && (
+        {score.length !== 0 && (
           <Table striped bordered hover style={{ borderRadius: '12px' }}>
             <S.TableHead>
               <S.TableTr>
@@ -129,7 +133,7 @@ function App() {
               </S.TableTr>
             </S.TableHead>
             <S.TableBody>
-              {AscendingArr.map((array, i) => {
+              {score.map((array, i) => {
                 return (
                   <S.TableTr key={array[1]}>
                     <S.TableTd>{i + 1}</S.TableTd>
