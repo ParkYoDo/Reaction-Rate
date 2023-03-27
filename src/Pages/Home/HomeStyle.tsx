@@ -110,8 +110,8 @@ export const InputDiv = styled.div`
 `;
 
 export const NameInput = styled.input`
-  height: 44px;
   width: 80%;
+  padding: 8px;
   border: 1px solid #b7b7b7;
   border-top-left-radius: 12px;
   border-bottom-left-radius: 12px;
@@ -120,8 +120,8 @@ export const NameInput = styled.input`
 `;
 
 export const ChangeBtn = styled.button`
-  height: 44px;
   width: 20%;
+  padding: 8px;
   background-color: transparent;
   border: 1px solid black;
   border-top-right-radius: 12px;
