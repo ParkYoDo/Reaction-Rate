@@ -111,7 +111,7 @@ export const InputDiv = styled.div`
 
 export const NameInput = styled.input`
   height: 44px;
-  width: 85%;
+  width: 80%;
   border: 1px solid #b7b7b7;
   border-top-left-radius: 12px;
   border-bottom-left-radius: 12px;
@@ -121,7 +121,7 @@ export const NameInput = styled.input`
 
 export const ChangeBtn = styled.button`
   height: 44px;
-  width: 15%;
+  width: 20%;
   background-color: transparent;
   border: 1px solid black;
   border-top-right-radius: 12px;
