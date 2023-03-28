@@ -1,4 +1,4 @@
-<h1 align="center">🎮 반응속도 테스트</h1>
+<h1 align="center">🎮 Reaction Rate</h1>
 <h3 align="center">https://reaction-rate.netlify.app</h3>
 <br>
 
