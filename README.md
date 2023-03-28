@@ -21,7 +21,7 @@
  <td>
   <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=ffffff"/>&nbsp 
   <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=Bootstrap&logoColor=ffffff"/>&nbsp 
-  <img src="https://img.shields.io/badge/styled components-DB7093?style=for-the-badge&logo=Storybook&logoColor=ffffff"/>
+  <img src="https://img.shields.io/badge/styled components-DB7093?style=for-the-badge&logo=styled-components&logoColor=ffffff"/>
   </td>
 </tr>
 <tr>
